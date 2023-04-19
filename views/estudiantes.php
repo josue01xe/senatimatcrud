@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
+    header('Location:../index.php');
+}
+?>
+
+
 <!doctype html>
 <html lang="es">
 
@@ -23,7 +32,7 @@
   
   <!-- Modal trigger button -->
   <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modal-estudiante">
-    Launch
+    Agregar
   </button>
 
   <div class="container">
@@ -193,8 +202,9 @@
           cache: false,
           success: function(){
             $("#formulario-estudiantes")[0].reset();
+            mostrarEstudiantes();
             $("#modal-estudiante").modal("hide");
-            alert("Guardado correctamente");
+            
           }
         });
       } 
