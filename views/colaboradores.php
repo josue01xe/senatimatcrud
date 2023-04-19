@@ -205,8 +205,8 @@
     success: function(e){
       console.log(e);
       $("#formulario-colaboradores")[0].reset();
+      mostrarColaboradores();
       $("#modal-colaborador").modal("hide");
-      alert("Guardado correctamente");
       
     }
   });
@@ -216,7 +216,7 @@
 function preguntarRegistro(){
         Swal.fire({
           icon: 'question',
-          title: 'Matrículas',
+          title: 'Colaboradores',
           text: '¿Está seguro de registrar al colaborador?',
           footer: 'Desarrollado con PHP',
           confirmButtonText: 'Aceptar',

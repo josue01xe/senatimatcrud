@@ -37,7 +37,7 @@ if (isset($_POST['operacion'])){
         if ($registro['cv'] == ''){
           echo $botonNulo;
         }else{
-          echo " <a href='../views/document/pdf{$registro['cv']}' data-lightbox='{$registro['idcolaborador']}' data-title='{$datosColaboradores}' class='btn btn-sm btn-warning' target='_blank'></a>";
+          echo " <a href='../views/document/pdf{$registro['cv']}' data-lightbox='{$registro['idcolaborador']}' data-title='{$datosColaboradores} target='_blank'></a>";
 
         }
 
