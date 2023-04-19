@@ -167,6 +167,8 @@
           }
         });
       }
+      
+     
 
       function registrarEstudiante(){
         //Enviaremos los datos dentro de un OBJETO
@@ -195,7 +197,7 @@
             alert("Guardado correctamente");
           }
         });
-      }
+      } 
 
       function preguntarRegistro(){
         Swal.fire({

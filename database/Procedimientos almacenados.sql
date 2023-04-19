@@ -55,6 +55,13 @@ CREATE PROCEDURE spu_sedes_listar()
 BEGIN
 	SELECT * FROM sedes ORDER BY 2;
 END $$
+CALL spu_sedes_listar()
+DELIMITER $$
+CREATE PROCEDURE spu_cargos_listar()
+BEGIN
+	SELECT * FROM cargos ORDER BY 2;
+END $$
+CALL spu_cargos_listar()
 
 DELIMITER $$
 CREATE PROCEDURE spu_escuelas_listar()
@@ -63,7 +70,7 @@ BEGIN
 END $$
 
 DELIMITER $$
-CREATE PROCEDURE spu_carreras_listar(IN _idescuela INT)
+CREATE PROCEDURE spu_carreras_listar(IN _idescuela INT) 
 BEGIN
 	SELECT idcarrera, carrera 
 		FROM carreras
@@ -72,3 +79,49 @@ END $$
 
 CALL spu_carreras_listar(3);
 
+
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_colaboradores_listar()
+BEGIN
+  SELECT   COL.idcolaborador,
+           COL.apellidos, COL.nombres,
+           COL.telefono, COL.tipocontrato,
+           COL.cv, COL.direccion,
+           car.cargo,
+           sed.sede
+           FROM colaboradores COL
+           INNER JOIN cargos CAR ON CAR.idcargo = COL.idcargo
+		     INNER JOIN sedes SED ON SED.idsede = COL.idsede
+		     WHERE COL.estado = '1';
+ END $$
+ 
+ CALL spu_colaboradores_listar();
+ 
+ 
+ 
+DELIMITER $$
+CREATE PROCEDURE spu_colaboradores_registrar
+(
+	IN _apellidos 		VARCHAR(50),
+	IN _nombres 		VARCHAR(50),
+	IN _idcargo 		INT,
+	IN _idsede 			INT,
+	IN _telefono 		CHAR(9),
+	IN _tipocontrato 	CHAR(1),
+	IN _cv 				VARCHAR(100),
+	IN _direccion 		VARCHAR(70)
+)
+BEGIN
+	-- Validar el contenido de _cv
+	IF _cv IS NULL THEN 
+		SET _cv = '';
+	END IF;
+
+	INSERT INTO colaboradores 
+	(apellidos, nombres, idcargo, idsede, telefono, tipocontrato, cv, direccion) VALUES
+	(_apellidos, _nombres, _idcargo, _idsede, _telefono, _tipocontrato, _cv, _direccion);
+END $$
+
+CALL spu_colaboradores_registrar('Tarantino Rojas', 'Jhon', 3, 3, '998765485', 'P', '', NULL);
