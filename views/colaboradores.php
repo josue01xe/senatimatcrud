@@ -6,6 +6,7 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
 }
 ?>
 
+
 <!doctype html>
 <html lang="es">
 
@@ -263,6 +264,30 @@ function preguntarRegistro(){
         obtenerSedes();
         obtenerCargos();
       });
+
+
+
+       //Al pulsar click sobr el botón Rojo , se elimine el registro
+                //Detectaremos eventos de los objetos creados de manera asíncrona en.. 
+                $("#tabla-colaboradores tbody").on("click", ".eliminar", function() {
+                    const idcolaboradorEliminar = $(this).data("idcolaborador");
+                    if (confirm("¿Estás seguro de proceder?")) {
+                        $.ajax({
+                            url: '../controllers/colaborador.controller.php',
+                            type: 'POST',
+                            data: {
+                                operacion: 'eliminar',
+                                idcolaborador: idcolaboradorEliminar
+                            },
+                            success: function(result) {
+                                if (result == "") {
+                                    mostrarColaboradores();
+                                }
+                            }
+                        });
+                    }
+                });
+
 
       //Funciones de carga automática
       mostrarColaboradores();
