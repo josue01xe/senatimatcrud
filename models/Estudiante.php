@@ -45,4 +45,15 @@ class Estudiante extends Conexion{
     }
   }
 
+  public function eliminarEstudiante($idestudiante = 0){
+    try{
+      $consulta = $this->accesoBD->prepare("CALL spu_estudiantes_eliminar(?)");
+      $consulta->execute(array($idestudiante));
+    }
+    catch(Exception $e){
+      die($e->getMessage());
+    }
+  }
+
+
 }

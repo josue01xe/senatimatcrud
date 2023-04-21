@@ -267,6 +267,28 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
         obtenerEscuelas();
       });
 
+      //Al pulsar click sobr el botón Rojo , se elimine el registro
+                //Detectaremos eventos de los objetos creados de manera asíncrona en.. 
+                $("#tabla-estudiantes tbody").on("click", ".eliminar", function() {
+                    const idestudianteEliminar = $(this).data("idestudiante");
+                    if (confirm("¿Estás seguro de proceder?")) {
+                        $.ajax({
+                            url: '../controllers/estudiante.controller.php',
+                            type: 'POST',
+                            data: {
+                                operacion: 'eliminar',
+                                idestudiante: idestudianteEliminar
+                            },
+                            success: function(result) {
+                                if (result == "") {
+                                    mostrarEstudiantes();
+                                }
+                            }
+                        });
+                    }
+                });
+
+
       //Funciones de carga automática
       mostrarEstudiantes();
 

@@ -63,7 +63,7 @@ if (isset($_POST['operacion'])){
             <td>{$registro['fechanacimiento']}</td>
             <td>{$registro['carrera']}</td>
             <td>
-              <a href='#' class='btn btn-sm btn-danger'><i class='bi bi-trash3'></i></a>
+            <a href='#' data-idestudiante='{$registro['idestudiante']}' class='btn btn-danger btn-sm eliminar'><i class='bi bi-trash3'></i></a>
               <a href='#' class='btn btn-sm btn-info'><i class='bi bi-pencil-fill'></i></a>";
         
         //La segunda parte a RENDERIZAR, es el botón VER FOTOGRAFÍA
@@ -83,5 +83,9 @@ if (isset($_POST['operacion'])){
       }
     }
   } //Fin operacion=listar
+
+  if ($_POST['operacion'] == 'eliminar'){
+    $estudiante->eliminarEstudiante($_POST['idestudiante']);
+  }
 
 }
