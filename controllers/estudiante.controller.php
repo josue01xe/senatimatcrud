@@ -64,7 +64,7 @@ if (isset($_POST['operacion'])){
             <td>{$registro['carrera']}</td>
             <td>
             <a href='#' data-idestudiante='{$registro['idestudiante']}' class='btn btn-danger btn-sm eliminar'><i class='bi bi-trash3'></i></a>
-              <a href='#' class='btn btn-sm btn-info'><i class='bi bi-pencil-fill'></i></a>";
+            <a href='#' data-idestudiante='{$registro['idestudiante']}'  class='btn btn-info btn-sm actualizar'><i class='bi bi-pencil'></i></a>";
         
         //La segunda parte a RENDERIZAR, es el botón VER FOTOGRAFÍA
         if ($registro['fotografia'] == ''){
@@ -86,6 +86,34 @@ if (isset($_POST['operacion'])){
 
   if ($_POST['operacion'] == 'eliminar'){
     $estudiante->eliminarEstudiante($_POST['idestudiante']);
+  }
+
+  
+  if ($_POST['operacion'] == 'obtenerestudiante'){
+    $registro = $estudiante->getEstudiante($_POST['idestudiante']);
+    echo json_encode($registro);
+  }
+
+
+
+  if ($_POST['operacion'] == 'actualizar'){
+    //Paso 1 : Recoger los datos que nos envía la vista(FORM, utilizando AJAX)
+    //$_POST : Esto es lo que se nos envía desde From
+    $datosForm = [
+      "idestudiante"       =>  $_POST['idestudiante'],
+      "apellidos"     => $_POST['apellidos'],
+      "nombres"       => $_POST['nombres'],
+      "tipodocumento" => $_POST['tipodocumento'],
+      "nrodocumento"  => $_POST['nrodocumento'],
+      "fechanacimiento" => $_POST['fechanacimiento'],
+      "idcarrera"     => $_POST['idcarrera'],
+      "idsede"        => $_POST['idsede'],
+      "fotografia"    => ''
+    ];
+
+    //Paso 2 : Enviar el arreglo como parámetro del método registrar}
+     $estudiante->actualizarEstudiante($datosForm);
+
   }
 
 }

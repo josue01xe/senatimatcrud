@@ -56,4 +56,46 @@ class Estudiante extends Conexion{
   }
 
 
+
+  public function getEstudiante($idestudiante = 0){
+    try{
+      $consulta = $this->accesoBD->prepare("CALL spu_estudiantes_recuperar_id(?)");
+      $consulta->execute(array($idestudiante));
+      //retornar el registro encontrado
+      return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
+    catch(Exception $e){
+      die($e-getMessage());
+    }
+  } 
+
+
+
+
+  public function actualizarEstudiante($datos = []){
+    try{
+      //1.-Preparamos la consulta
+      $consulta = $this->accesoBD->prepare("CALL spu_estudiantes_actualizar(?,?,?,?,?,?,?,?,?)");
+      //2.-Ejecutamos la consulta
+      $consulta->execute(
+        array(
+          $datos['idestudiante'], 
+          $datos['apellidos'], 
+          $datos['nombres'], 
+          $datos['tipodocumento'],
+          $datos['nrodocumento'],
+          $datos['fechanacimiento'],
+          $datos['idcarrera'],
+          $datos['idsede'],
+          $datos['fotografia']
+        )
+      );
+    }
+    catch(Exception $e){
+      die($e->getMessage());
+    }
+  }
+
 }
+
+?>
