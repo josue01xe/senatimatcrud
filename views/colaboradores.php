@@ -104,7 +104,7 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
             <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="telefono" class="form-label">telefono</label>
-                <input type="text" class="form-control form-control-sm" id="telefono">
+                <input type="tel" class="form-control form-control-sm" id="telefono" maxlength="9" pattern="\d+" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
               </div>
               <div class="mb-3 col-md-6">
                     <label for="tipocontrato" class="">tipocontrato</label>
@@ -128,10 +128,6 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
                 <input type="text" class="form-control form-control-sm" id="direccion">
               </div>
             </div>
-             
-            
-            
-            
           </form>
 
         </div>
@@ -143,7 +139,13 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
     </div>
   </div>
   
+
+  <div style="display:flex; justify-content:center; margin-left:940px;">
+  <a href="botones.php" style="padding: 10px;">Regresar</a>
   
+  <a href="../controllers/usuario.controller.php?operacion=finalizar" style="padding: 10px;">Cerrar sesión</a>
+</div>
+
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

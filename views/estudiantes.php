@@ -86,9 +86,10 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
                 </select>
               </div>
               <div class="mb-3 col-md-6">
-                <label for="nrodocumento" class="form-label">Nro documento:</label>
-                <input type="text" class="form-control form-control-sm" id="nrodocumento">
-              </div>
+    <label for="nrodocumento" class="form-label">Nro documento:</label>
+    <input type="text" class="form-control form-control-sm" id="nrodocumento" maxlength="8" pattern="\d+" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+</div>
+
             </div>
             <div class="row">
               <div class="mb-3 col-md-6">
@@ -136,7 +137,8 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
   <a href="botones.php" style="padding: 10px;">Regresar</a>
   
   <a href="../controllers/usuario.controller.php?operacion=finalizar" style="padding: 10px;">Cerrar sesión</a>
-  
+</div>
+
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
@@ -234,23 +236,7 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
 
 
 
-      function preguntarActualizacion(){
-        Swal.fire({
-          icon: 'question',
-          title: 'Matrículas',
-          text: '¿Está seguro de actualizar al estudiante?',
-          footer: 'Desarrollado con PHP',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#3498DB',
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar'
-        }).then((result) => {
-          //Identificando acción del usuario
-          if (result.isConfirmed){
-            actualizarEstudiante();
-          }
-        });
-      }
+ 
 
       function mostrarEstudiantes(){
         $.ajax({
@@ -265,7 +251,7 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
       }
 
       $("#guardar-estudiante").click(preguntarRegistro);
-      $("#guardar-estudiante").click(preguntarActualizacion);
+      //$("#guardar-estudiante").click(preguntarActualizacion);
       //Al cambiar una escuela, se actualizará las carreras
       $("#escuela").change(function (){
         const idescuelaFiltro = $(this).val();
@@ -315,89 +301,6 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
 
 
 
-              // Función para obtener los datos de un estudiante
-// Función para obtener los datos de un estudiante
-function obtenerEstudiante(idestudiante) {
-  $.ajax({
-    url: '../controllers/estudiante.controller.php',
-    type: 'POST',
-    data: {
-      operacion: 'obtenerestudiante',
-      idestudiante: idestudiante
-    },
-    dataType: 'json',
-    success: function (registro) {
-      // Llenar los campos del formulario con los datos del estudiante
-      $("#idestudiante").val(registro.idestudiante);
-      $("#apellidos").val(registro.apellidos);
-      $("#nombres").val(registro.nombres);
-      $("#tipodocumento").val(registro.tipodocumento);
-      $("#nrodocumento").val(registro.nrodocumento);
-      $("#fechanacimiento").val(registro.fechanacimiento);
-      $("#idcarrera").val(registro.idcarrera);
-      $("#idsede").val(registro.idsede);
-
-      // Mostrar el modal
-      $("#modal-estudiante").modal("show");
-    },
-    error: function() {
-      alert("Error al obtener los datos del estudiante.");
-    }
-  });
-}
-
-// Función para actualizar un estudiante
-function actualizarEstudiante() {
-  //Enviaremos los datos dentro de un OBJETO
-  var formData = new FormData();
-
-  formData.append("operacion", "actualizar");
-  formData.append("idestudiante", $("#idestudiante").val());
-  formData.append("apellidos", $("#apellidos").val());
-  formData.append("nombres", $("#nombres").val());
-  formData.append("tipodocumento", $("#tipodocumento").val());
-  formData.append("nrodocumento", $("#nrodocumento").val());
-  formData.append("fechanacimiento", $("#fechanacimiento").val());
-  formData.append("idcarrera", $("#carrera").val());
-  formData.append("idsede", $("#sede").val());
-  formData.append("fotografia", $("#fotografia")[0].files[0]);
-
-  $.ajax({
-    url: '../controllers/estudiante.controller.php',
-    type: 'POST',
-    data: formData,
-    contentType: false,
-    processData: false,
-    cache: false,
-    success: function(){
-      $("#formulario-estudiantes")[0].reset();
-      mostrarEstudiantes();
-      $("#modal-estudiante").modal("hide");
-    },
-    error: function() {
-      alert("Error al actualizar el estudiante.");
-    }
-  });
-}
-
-
-// Asignar evento al botón de editar
-$("#tabla-estudiantes").on("click", ".actualizar", function () {
-  // Obtener el ID del estudiante
-  var idestudiante = $(this).data("idestudiante");
-
-  // Obtener los datos del estudiante
-  obtenerEstudiante(idestudiante);
-});
-
-// Asignar evento al botón de guardar cambios
-$("#guardar-estudiante").click(function() {
-  preguntarActualizacion(actualizarEstudiante);
-});
-
-                                    
-
-               
 
       //Funciones de carga automática
       mostrarEstudiantes();

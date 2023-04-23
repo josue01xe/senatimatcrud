@@ -32,7 +32,7 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
 <div style="display:flex; justify-content:center; align-items:center; height:70vh;">
     <div>
      
-    <h2>Botones para colaboradores y estudiantes</h2>
+    <h2></h2>
     
     <div id="botones-centrados" style="display:flex; justify-content:center; margin-top:120px;">
   <a href="colaboradores.php">
@@ -44,9 +44,8 @@ if (!isset($_SESSION['login']) || $_SESSION ['login'] == false){
   </a>
 </div>
 
-<div style = "width:40px;"></div>
 
-<div style="display:flex; justify-content:center; margin-top:50px;">
+<div style="display:flex; justify-content:center; margin-top:100px;">
   <a href="../controllers/usuario.controller.php?operacion=finalizar">Cerrar sesión</a>
 </div>
 </div>
