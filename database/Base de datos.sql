@@ -105,7 +105,7 @@ SELECT * FROM cargos ORDER BY 1;
 
 
 
-
+SELECT * FROM cargos WHERE idcargo = 1;
 
 
 
@@ -133,3 +133,28 @@ INSERT INTO colaboradores
 ('Yataco Ruiz', 'Carlos', 2, 2, '912456789', 'C', '');
 
 SELECT * FROM colaboradores;
+
+
+
+CREATE TABLE usuarios
+(
+ idusuario INT AUTO_INCREMENT PRIMARY KEY,
+ nombreusuario     VARCHAR(30)   NOT NULL,
+ claveacceso       VARCHAR(90)   NOT NULL,
+ apellidos         VARCHAR(30)   NOT NULL,
+ nombres           VARCHAR(30)   NOT NULL,
+ nivelacceso       CHAR(1)       NOT NULL DEFAULT 'A',
+ estado            CHAR(1)       NOT NULL DEFAULT '1',
+ fecharegistro     DATETIME      NOT NULL DEFAULT NOW(),
+ fechaupdate       DATETIME      NULL,
+CONSTRAINT uk_nombreusuario_usa   UNIQUE (nombreusuario)
+)ENGINE = INNODB;
+
+INSERT INTO usuarios (nombreusuario, claveacceso, apellidos, nombres) VALUES
+  ('JOSUE', '123456', 'Buleje Flores', 'Josue'),
+  ('JOEL','123456', 'Rojas Marcos', 'Jose Joel');
+
+UPDATE usuarios SET
+       claveacceso = '$2y$10$EauxzNplzGb1A4I4jjtXAeo/fMlk3Zvm4dp70TDBBX29Tt51tZyBG'
+       
+       SELECT * FROM usuarios;

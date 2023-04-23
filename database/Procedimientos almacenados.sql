@@ -56,6 +56,7 @@ BEGIN
 	SELECT * FROM sedes ORDER BY 2;
 END $$
 CALL spu_sedes_listar()
+
 DELIMITER $$
 CREATE PROCEDURE spu_cargos_listar()
 BEGIN
@@ -125,3 +126,100 @@ BEGIN
 END $$
 
 CALL spu_colaboradores_registrar('Tarantino Rojas', 'Jhon', 3, 3, '998765485', 'P', '', NULL);
+
+
+
+
+
+      DELIMITER $$
+CREATE PROCEDURE spu_usuarios_login(IN _nombreusuario VARCHAR(30))
+BEGIN
+  SELECT  idusuario, nombreusuario, claveacceso,
+          apellidos, nombres, nivelacceso
+  FROM usuarios
+  WHERE nombreusuario = _nombreusuario AND estado = '1';
+END $$
+
+         
+         CALL spu_usuarios_login('JOSUE');
+
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_estudiantes_eliminar(IN _idestudiante INT)
+BEGIN
+	UPDATE estudiantes 
+	SET estado = '0' 
+	WHERE idestudiante = _idestudiante;
+END $$
+
+CALL spu_estudiantes_eliminar(3);
+SELECT * FROM estudiantes;
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_colaboradores_eliminar(IN _idcolaborador INT)
+BEGIN
+	UPDATE colaboradores 
+	SET estado = '0' 
+	WHERE idcolaborador = _idcolaborador;
+END $$
+
+CALL spu_colaboradores_eliminar(3);
+SELECT * FROM colaboradores;
+
+
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_estudiantes_recuperar_id(IN _idestudiante INT)
+BEGIN
+	SELECT * FROM estudiantes WHERE idestudiante = _idestudiante;
+END $$
+
+CALL spu_estudiantes_recuperar_id(2);
+
+
+DELIMITER $$
+CREATE PROCEDURE spu_estudiantes_actualizar
+(
+	IN _idestudiante		INT,
+	IN _apellidos 			VARCHAR(40),
+	IN _nombres 			VARCHAR(40),
+	IN _tipodocumento		CHAR(1),
+	IN _nrodocumento		CHAR(8),
+	IN _fechanacimiento	DATE,
+	IN _idcarrera 			INT,
+	IN _idsede 				INT,
+	IN _fotografia 		VARCHAR(100)
+)
+BEGIN
+	-- Validar el contenido de _fotografia
+	IF _fotografia = '' THEN 
+		SET _fotografia = NULL;
+	END IF;
+
+	UPDATE estudiantes 
+	SET 
+		apellidos = _apellidos,
+		nombres = _nombres,
+		tipodocumento = _tipodocumento,
+		nrodocumento = _nrodocumento,
+		fechanacimiento = _fechanacimiento,
+		idcarrera = _idcarrera,
+		idsede = _idsede,
+		fotografia = _fotografia
+	WHERE 
+		idestudiante = _idestudiante;
+END $$
+
+
+
+SELECT * FROM estudiantes WHERE idestudiante = 1;
+CALL spu_estudiantes_actualizar(1, 'Pérez', 'Antonio', 'D', '12345678', '1995-10-20', 2, 1, '');
